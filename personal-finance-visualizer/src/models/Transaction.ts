@@ -1,3 +1,4 @@
+// filepath: a:\vsd\project\NEXTjs\Personal_Finance_Visualizer\personal-finance-visualizer\src\models\Transaction.ts
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ITransaction extends Document {

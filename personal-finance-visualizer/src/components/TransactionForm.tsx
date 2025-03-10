@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,10 +17,14 @@ interface TransactionFormProps {
 }
 
 const TransactionForm: React.FC<TransactionFormProps> = ({ onSubmit, initialData }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<TransactionFormData>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<TransactionFormData>({
     resolver: zodResolver(transactionSchema),
-    defaultValues: initialData || { amount: 0, date: '', description: '' },
+    defaultValues: initialData || { amount: 0, date: new Date().toISOString().split('T')[0], description: '' },
   });
+
+  useEffect(() => {
+    setValue('date', new Date().toISOString().split('T')[0]);
+  }, [setValue]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="transaction-form">
